@@ -1,0 +1,76 @@
+
+.App {
+  text-align: center;
+}
+
+
+
+.content{
+  text-align:center;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  padding:10px;
+  min-width: 90%;
+  min-height: 80vh;
+}
+
+.footer{
+  display: flex;
+  justify-content:space-between;
+  color:white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 20px;
+  background-color: black ;
+  position:relative;
+  bottom:0;
+  width:100%;
+  height:50px;
+}
+
+.footer div{
+  display: flex;
+  color:white;
+  align-items: center;
+  
+}
+.footer div p{
+  margin: 0px 0px 10px 0px;
+  padding: 10px 0px 0px 10px;
+}
+
+
+.footerTable{
+  display: inline-flex;
+  width: 84%;
+  justify-content: flex-end
+}
+.footerTable h2{
+  font-weight: bolder;
+  margin: 0px 20px 0px 0px;
+}
+
+
+
+.controls{
+  display: flex;
+  min-width: 100%;
+  align-content: center;
+  justify-content: space-between;
+  margin: 0px 0px 0px 0px;
+  padding: 10px;
+  border: 1px solid lightgray;
+  border-radius: 4px
+}
+
+
+
+.controls div{
+  display: flex;
+  flex-direction: row;
+}
+
+.controls div div{
+  flex-direction: column
+}
