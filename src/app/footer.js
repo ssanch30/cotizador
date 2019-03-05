@@ -26,6 +26,8 @@ constructor(props){
       foo = foo.toString().replace(/,/g, '')
       total = total + parseFloat(foo)
     }
+    total = total.toFixed(2)
+    
     this.setState({total})
   }
 
@@ -35,6 +37,7 @@ constructor(props){
       <div className = 'footerTable'> 
         <h2>Total: </h2>
         <p style={{margin: "5px 0px 0px 0px", fontWeight: 'bold'}}>{`$ ${(this.state.total).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',')}`} </p>
+        <p> + iva </p>
       </div> 
     )
   }

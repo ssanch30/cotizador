@@ -6,9 +6,12 @@ import {
   Table, Input, Button, Popconfirm, Form, InputNumber, Icon, Tooltip
 } from 'antd';
 import Footer from './footer'
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const FormItem = Form.Item;
 const EditableContext = React.createContext();
+
 
 const EditableRow = ({ form, index, ...props }) => (
   <EditableContext.Provider value={form}>
@@ -174,13 +177,13 @@ class EditableTable extends React.Component {
       editable: true,
       numeric: true,
     }, {
-      title: 'Ancho',
+      title: 'Ancho [cm]',
       dataIndex: 'ancho',
       width: '30%',
       numeric: true,
       editable:  true,
     }, {
-      title: 'Largo',
+      title: 'Largo [cm]',
       dataIndex: 'largo',
       width: '30%',
       numeric: true,
@@ -329,7 +332,6 @@ class EditableTable extends React.Component {
   }
 
   recalculateData = (item) => {
-    console.log(JSON.stringify(item.producto))
 
     let precios = {
                   '["fotopolimero","convencional"]':70,
@@ -351,7 +353,7 @@ class EditableTable extends React.Component {
       '["policromia"]': 0 
     }
   
-    item['area'] = item.ancho*item.largo*item.cantidad
+    item['area'] = (item.ancho*item.largo*item.cantidad).toFixed(1)
 
     let unitarioInt = precios[JSON.stringify(item.producto)] 
     
@@ -365,7 +367,7 @@ class EditableTable extends React.Component {
     item['v_unitario'] = this.parser(unitarioInt.toFixed(1))
 
     let trmInt = this.applyTRM(item.producto[0]) ? (((this.state.trm/2956.43)-1)/2).toFixed(4) : 0
-    item['trm'] = `${trmInt*100}%`
+    item['trm'] = `${(trmInt*100).toFixed(2)}%`
 
     let totalInt = this.check2D(item.producto[0]) ? 
                     unitarioInt * item.area 
@@ -374,8 +376,8 @@ class EditableTable extends React.Component {
     if ( trmInt !== 0 ){
       totalInt = totalInt + ( totalInt * trmInt )
     }
-  
-    item['total'] = this.parser(totalInt.toFixed(1).toString())
+    totalInt = totalInt.toFixed(1)
+    item['total'] = this.parser(totalInt)
 
     return item
   }
@@ -398,8 +400,40 @@ class EditableTable extends React.Component {
     console.log('toggleOptions')
     this.setState({ isPlate });
   }
-  handleRefresh = (row) => {
-    console.log("Refresh")
+  handleRefresh = () => {
+    const newData = [...this.state.dataSource];
+
+    for(let i = 0; i < newData.length; i++){
+      let row = newData[i]
+      const index = newData.findIndex(item => row.key === item.key);
+      const item = newData[i][index]
+      if (row.producto !== ''){
+        row = this.recalculateData(row)
+      }
+      
+      newData.splice(index, 1, {
+        ...item,
+        ...row,
+      });
+      this.setState({ dataSource: newData });
+    }
+  }
+  handleExport = ()=>{
+      const input = document.getElementById('root');
+      
+      console.log(document.getElementById('root').offsetHeight, document.getElementById('root').offsetWidth)
+
+      html2canvas(input)
+        .then((canvas) => {
+          let pdf = '';
+          const imgData = canvas.toDataURL('image/png');
+
+          pdf = new jsPDF('l', 'mm', [input.offsetHeight - 80, input.offsetWidth - 230]);
+          
+          pdf.addImage(imgData, 'PNG', 16, 16);
+          pdf.save(`Cotizacion_Grafiflex_${new Date().toLocaleDateString()}.pdf`);
+        });
+      ;
   }
   render() {
     const { dataSource } = this.state;

@@ -1,5 +1,7 @@
 import React from 'react'
 import { Layout,Icon } from 'antd';
+import './App.css'
+
 const logo = require( '../img/logoNegro.png')
 
 const { Header, Footer } = Layout;
@@ -29,19 +31,26 @@ export const cHeader = ()=> {
 export const cFooter = ()=>{
   return(
   <Footer  className = 'footer'>
-    <div>
+    <div className = 'mails'>
       <Icon type = "mail" style={{color:'white'}}/>
       <p>mejoratuimpresion@grafiflex.com</p>
     </div>
 
     <div> 
       <Icon type="environment"/>
-      <p>Calle 49 Sur No. 43 A - 241 3er Piso</p>
+      <div className={'dirs'}>
+        <p>Medellín: Calle 49 Sur No. 43 A - 241. 3er Piso</p>
+        <p>Barranquilla: Via 40 No. 85 - 470.  Of. 15A</p>
+      </div>
     </div>
 
-    <div>
+    <div className='phone'>
       <Icon type = "phone"/>
-      <p>(57-4) 44 88 508</p>
+      <div className ='phoneP'>
+        <p>(57-4) 44 88 508</p>
+        <p>(57-5) 385 8506</p>
+      </div>
+
     </div>
   </Footer>
   )

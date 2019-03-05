@@ -35,9 +35,32 @@
   align-items: center;
   
 }
-.footer div p{
-  margin: 0px 0px 10px 0px;
-  padding: 10px 0px 0px 10px;
+
+.mails p{
+  margin : 10px;
+}
+
+.phone p{
+  margin : 0px;
+  font-size: 14;
+}
+.phoneP{
+  flex-direction: column;
+  margin: 0px 0px 0px 10px
+}
+.dirs{
+  margin: 10px 0px 10px 10px;
+  padding: 0px 0px 0px 0px;
+  display: inline-flex;
+  flex-direction: column;
+  block-size: 50px 20px;
+  font-size: 14px;
+  align-items: right;
+}
+.dirs p{
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+
 }
 
 
@@ -50,7 +73,11 @@
   font-weight: bolder;
   margin: 0px 20px 0px 0px;
 }
-
+.footerTable p{
+  margin: 5px 0px 0px 10px;
+  color: dimgray
+  
+}
 
 
 .controls{
